@@ -1,2 +1,1 @@
-# noticia
-NoticIA SaaS development.
+this is my fucking framework.
