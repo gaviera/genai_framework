@@ -1,5 +1,5 @@
 import os, sys
-from app.agents.scrapper_agent import scrapper_agent, scrapper_runnable
+from app.agents.scrapper_agent import scrapper_agent
 from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage
 from loguru import logger
