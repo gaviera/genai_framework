@@ -4,6 +4,9 @@ from langchain_core.language_models import BaseChatModel
 from core.builders.tool_manager import ToolManager
 from core.builders.prompt_builder import PromptBuilder
 from typing import List
+from core.executors.runnable_executor import RunnableExecutor
+from core.executors.runnable_withmemory_executor import RunnableWithMemoryExecutor
+from langchain_openai import ChatOpenAI
 
 class Agent:
     # A class to create an agent with a specific name, prompt, conversation history setting,
@@ -56,3 +59,18 @@ class Agent:
         except ValueError as e:
             # Print an error message if there is an issue creating the agent
             print(f"Error creating the agent {self.name}: {str(e)}")
+
+def define_agent(agent_name, agent_prompt, agent_history, agent_model, agent_tools) -> any:
+    # Create an instance of the Agent class with the specified parameters and create the agent
+    agent = Agent(
+        name=agent_name,
+        system_prompt=agent_prompt,
+        conversation_history=agent_history,
+        llm=ChatOpenAI(model=agent_model),
+        tools=agent_tools
+    ).create()
+
+    if agent_history:
+        return RunnableWithMemoryExecutor(agent)
+    else:
+        return RunnableExecutor(agent)
