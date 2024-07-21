@@ -2,6 +2,7 @@ from langchain_core.callbacks import CallbackManagerForToolRun
 from langchain_core.tools import BaseTool
 from pydantic import BaseModel, Field
 from typing import Optional, Union, Type
+from loguru import logger
 
 # Define a Pydantic model for the input schema of the tool
 class SimpleToolScriptInput(BaseModel):
@@ -10,7 +11,7 @@ class SimpleToolScriptInput(BaseModel):
 # Define a tool class that greets a user by name
 class SimpleTool(BaseTool):
     # Set the name and description of the tool
-    name: str = "SimpleTool"
+    name: str = "simpletool"
     description: str = (
         """
         Greet the user in the terminal when they provide their name
@@ -36,9 +37,9 @@ class SimpleTool(BaseTool):
             Union[str, Exception]: Returns True if successful, otherwise an error message.
         """
         try:
+            logger.debug(f"[TOOL] Start to run {self.name}")
             # Print a greeting message to the terminal
-            print(f"Hola, {name}!")
-            return True
+            return f"Hola, {name}!"
         except Exception as e:
             # Return the exception message if an error occurs
             return repr(e)
@@ -60,9 +61,9 @@ class SimpleTool(BaseTool):
             Union[str, Exception]: Returns True if successful, otherwise an error message.
         """
         try:
+            logger.debug(f"[TOOL] Start to run {self.name}")
             # Print a greeting message to the terminal
-            print(f"Hola, {name}!")
-            return True
+            return f"Hola, {name}!"
         except Exception as e:
             # Return the exception message if an error occurs
             return repr(e)

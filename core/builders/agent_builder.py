@@ -1,9 +1,9 @@
 from langchain_core.language_models import BaseChatModel
 from langchain_core.runnables import RunnableSerializable
 from langchain_core.language_models import BaseChatModel
-from typing import List
-from app.agents.tools.tool_manager import ToolManager
+from core.builders.tool_manager import ToolManager
 from core.builders.prompt_builder import PromptBuilder
+from typing import List
 
 class Agent:
     # A class to create an agent with a specific name, prompt, conversation history setting,
