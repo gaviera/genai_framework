@@ -1,5 +1,5 @@
 import os, sys
-from app.agents.scrapper_agent import scrapper_agent
+from app.agents.scrapper_agent import scrapper
 from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage
 from loguru import logger
@@ -16,6 +16,8 @@ while True:
     prompt = input("?> ")
     # If the user provided a prompt, process it with the scrapper agent
     if prompt:
-        response = scrapper_agent.invoke(input={"messages": [HumanMessage(content=prompt)]})
+        response = scrapper.runnable.invoke(
+            config={"configurable":{"session_id":"test1"}},
+            input={"messages": [HumanMessage(content=prompt)]})
         logger.debug(response)
         print(f"IA> {response.content}")  # Print the agent's response

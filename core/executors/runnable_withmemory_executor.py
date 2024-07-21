@@ -1,7 +1,7 @@
+import os, operator, json
 from core.executors.runnable_executor import RunnableExecutor
 from langchain_core.runnables import Runnable, RunnableConfig
 from langchain_core.messages import BaseMessage, HumanMessage, ToolMessage
-import operator, json
 from typing import Annotated, TypedDict, Union, Callable
 from langchain_core.agents import AgentAction, AgentFinish
 from langchain_core.messages import AIMessage, message_to_dict
@@ -96,7 +96,7 @@ class RunnableWithMemoryExecutor(RunnableExecutor):
         Returns:
             MongoDBChatMessageHistory: Object containing the message history of the session.
         """
-        result = CustomMongoDBChatMessageHistory(connection_string="mongodb://localhost:27017", session_id=session_id)
+        result = CustomMongoDBChatMessageHistory(connection_string=os.environ["MONGODB_CONN_STRING"], session_id=session_id)
         return result
 
 class CustomMongoDBChatMessageHistory(MongoDBChatMessageHistory):
