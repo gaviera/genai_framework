@@ -2,6 +2,7 @@ import os, sys
 from app.agents.scrapper_agent import scrapper_agent, scrapper_runnable
 from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage
+from loguru import logger
 
 # Add the project base path to the system path
 BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -16,4 +17,5 @@ while True:
     # If the user provided a prompt, process it with the scrapper agent
     if prompt:
         response = scrapper_agent.invoke(input={"messages": [HumanMessage(content=prompt)]})
-        print(f"IA> {response}")  # Print the agent's response
+        logger.debug(response)
+        print(f"IA> {response.content}")  # Print the agent's response
