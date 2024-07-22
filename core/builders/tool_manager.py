@@ -34,7 +34,7 @@ class ToolManager:
         Returns:
             List[Type[Tool]]: A list containing all tool instances.
         """
-        return get_tool_instances() #[SimpleTool()]
+        return get_tool_instances() 
 
     def get_tool(self, tools: list) -> List[Type[Tool]]:
         """
@@ -53,16 +53,14 @@ def get_tool_instances() -> List[Type[Tool]]:
     path = os.path.abspath(os.curdir)
     for file in glob.glob(f"{path}/app/agents/tools/*.py"):
         p,f = os.path.split(file)
-        if(f not in ["tool_manager.py"]):
-            path_pyfile = Path(file)
-            sys.path.append(str(path_pyfile.parent))
-            tool_module = importlib.import_module(path_pyfile.stem)
-            for name_local in dir(tool_module):
-                #print(f"{name_local} is a subclass of BaseTool {issubclass(getattr(tool_module, name_local), BaseTool)}")
-                if (not name_local.endswith("py") 
-                    and inspect.isclass(getattr(tool_module, name_local))
-                    and issubclass(getattr(tool_module, name_local), BaseTool) #not name_local.endswith('Input') 
-                    and name_local not in ['BaseTool']):
-                        ToolClass = getattr(tool_module, name_local)
-                        instances.append(ToolClass())
+        path_pyfile = Path(file)
+        sys.path.append(str(path_pyfile.parent))
+        tool_module = importlib.import_module(path_pyfile.stem)
+        for name_local in dir(tool_module):
+            if (not name_local.endswith("py") 
+                and inspect.isclass(getattr(tool_module, name_local))
+                and issubclass(getattr(tool_module, name_local), BaseTool) 
+                and name_local not in ['BaseTool']):
+                    ToolClass = getattr(tool_module, name_local)
+                    instances.append(ToolClass())
     return instances
